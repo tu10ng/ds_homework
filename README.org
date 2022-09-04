@@ -1,2 +1,6 @@
 * desc
 this project is a class assignment for data structure.
+
+* TODO program structure
+an interface between algorithm and gui.
+
