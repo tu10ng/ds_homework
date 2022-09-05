@@ -30,10 +30,15 @@ function draw_building(){
 }
 
 function draw_route(){
-    for (let i = 0; i < route.length - 1; i++){
+    for (let i = 0; i < route.length; i++){
         // route[i] -> route[i+1]
         let first = building[route[i]];
-        let second = building[route[i+1]];
+        let second;
+        if (i == route.length-1){
+            second = building[route[0]]; // exceed route length, last building->dormitory
+        }else{
+            second = building[route[i+1]];
+        }
         let start = [first[0] + first[2]/2, first[1] + first[3]/2];
         let end = [second[0] + second[2]/2, second[1] + second[3]/2];
         ctx.beginPath();
@@ -41,6 +46,7 @@ function draw_route(){
         ctx.lineTo(end[0], end[1]);
         ctx.stroke();
     }
+    
 }
 function draw(){
     draw_building();
