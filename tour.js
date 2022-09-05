@@ -15,7 +15,7 @@ init();
 
 function clear(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);    
-    ctx.drawImage(map_bg, 0, 0);
+    //ctx.drawImage(map_bg, 0, 0);
 }
 
 function draw(){
@@ -33,8 +33,15 @@ function init(){
     canvas.addEventListener('click', (e) => {
         let tmp_build = isBuilding(e);
         if(tmp_build != false){
-            alert(tmp_build);
+            console.log(tmp_build);
+            if (route.includes(tmp_build)){
+                route.splice(route.findIndex(i => i === tmp_build), 1)
+            } else {
+                route.push(tmp_build);
+            }
+            alert(route);
             calculate();
+            clear();
             draw();
         }else{
             // alert("not building");
