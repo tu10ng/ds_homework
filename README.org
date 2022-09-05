@@ -1,8 +1,13 @@
 * desc
-this project is a class assignment for data structure. calculate fastest route in bjut.
+a work on progress.
+
+this project is a class assignment for data structure.
+
+calculate fastest route in bjut.
 
 * TODO program structure
 +an interface between algorithm and gui.+
+
 using canvas in html (index.html), js for handling dynamic computing.
 
 
