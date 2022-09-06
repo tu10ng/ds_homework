@@ -2,7 +2,6 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 const building = {
-    // the first key should be 宿舍 for route to init    
     宿舍: [0,0,100,100],
     天天餐厅: [100,0,100,100],
     金工楼: [500,0,100,100],
@@ -18,7 +17,7 @@ const width = canvas.width;
 const height = canvas.height;
 const map_bg = new Image();
 map_bg.src = "./map_bg.png";
-let route = [Object.keys(building)[0]];
+let route = [];
 let dist = {};
 
 function clear(){
