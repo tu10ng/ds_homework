@@ -40,15 +40,23 @@ function draw_route(){
         let first = building[route[i]];
         let second;
         if (i == route.length-1){
-            second = building[route[0]]; // exceed route length, last building->dormitory
+            second = building[route[0]]; // exceed route length, last build->first build
         }else{
             second = building[route[i+1]];
         }
         let start = [first[0] + first[2]/2, first[1] + first[3]/2];
         let end = [second[0] + second[2]/2, second[1] + second[3]/2];
+        
+        let headlen = 10; // length of head in pixels
+        var dx = end[0] - start[0];
+        var dy = end[1] - start[1];
+        var angle = Math.atan2(dy, dx);
         ctx.beginPath();
         ctx.moveTo(start[0], start[1]);
         ctx.lineTo(end[0], end[1]);
+        ctx.lineTo(end[0] - headlen * Math.cos(angle - Math.PI / 6), end[1] - headlen * Math.sin(angle - Math.PI / 6));
+        ctx.moveTo(end[0], end[1]);
+        ctx.lineTo(end[0] - headlen * Math.cos(angle + Math.PI / 6), end[1] - headlen * Math.sin(angle + Math.PI / 6));        
         ctx.stroke();
     }
 }
@@ -59,6 +67,8 @@ function draw(){
 function init(){
     clear();
     draw();
+    init_dist();
+    
     canvas.addEventListener('click', (e) => {
         let tmp_build = isBuilding(e);
         if(tmp_build != false){
@@ -75,7 +85,6 @@ function init(){
             console.log("not building");
         }
     });
-    init_dist();
 }    
 
 function cal_dist(x1, y1, x2, y2){
