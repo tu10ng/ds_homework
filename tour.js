@@ -4,21 +4,21 @@ const select = document.getElementById('algo');
 const ctx = canvas.getContext('2d');
 
 const building = {
-    宿舍: [0,0,100,100],
-    天天餐厅: [100,0,100,100],
-    金工楼: [500,0,100,100],
-    北操场: [400,100,100,100], 
-    信息楼: [0,200,100,100],
-    三教: [200,200,100,100],
-    南操场: [300,200,200,200],
-    四教: [600,200,100,100],
-    美食园: [200,300,100,100],
-    人文楼: [200,400,100,100],
+    宿舍: [225,45,97,69],
+    天天餐厅: [330,45,60,69],
+    金工楼: [505,45,70,70],
+    北操场: [480,165,90,140], 
+    信息楼: [215,360,80,90],
+    三教: [370,310,120,70],
+    南操场: [495,310,120,200],
+    四教: [620,340,170,150],
+    美食园: [370,465,120,50],
+    人文楼: [380,607,110,53],
 }    
 const width = canvas.width;
 const height = canvas.height;
 const map_bg = new Image();
-map_bg.src = "./map_bg.png";
+map_bg.src = "./pic/bjutmap.png";
 let route = [];
 let dist = {};
 // naive, salesman, mst, none
@@ -26,7 +26,9 @@ let algorithm = select.value;
 
 function init(){
     clear();
-    draw();
+    map_bg.onload = () => {
+        draw();
+    }
     init_dist();
     
     canvas.addEventListener('click', (e) => {
@@ -81,16 +83,23 @@ function clear(){
 }
 
 function draw(){
+    ctx.drawImage(map_bg, 0, 0);
     draw_building();
     draw_route();
 }
 
 function draw_building(){
     for (const [key,value] of Object.entries(building)){
-        ctx.strokeRect(value[0], value[1], value[2], value[3]);
-        
-        ctx.font = '24px Times New Roman';
-        ctx.fillText(key, value[0], value[1]+ value[3]/2);    
+        ctx.save();
+        ctx.fillStyle = 'rgba(25, 25, 25, 0.3)'
+        ctx.fillRect(value[0], value[1], value[2], value[3]);
+        ctx.restore();
+
+        ctx.save();
+        ctx.font = '24px bold Times New Roman';
+        ctx.textAlign = 'center';
+        ctx.fillText(key, value[0] + value[2]/2, value[1]+ value[3]/2);    
+        ctx.restore();
     }
 }
 
@@ -111,6 +120,8 @@ function draw_route(){
         var dx = end[0] - start[0];
         var dy = end[1] - start[1];
         var angle = Math.atan2(dy, dx);
+        ctx.save();
+        ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(start[0], start[1]);
         ctx.lineTo(end[0], end[1]);
@@ -118,6 +129,7 @@ function draw_route(){
         ctx.moveTo(end[0], end[1]);
         ctx.lineTo(end[0] - arrow_len * Math.cos(angle + Math.PI / 6), end[1] - arrow_len * Math.sin(angle + Math.PI / 6));        
         ctx.stroke();
+        ctx.restore();
     }
 }
 
