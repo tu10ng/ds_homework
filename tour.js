@@ -1,7 +1,9 @@
 const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 const tt = document.getElementById('tt');
 const select = document.getElementById('algo');
-const ctx = canvas.getContext('2d');
+const clr = document.getElementById('clear');
+const algo_inform = document.getElementById('algo_inform');
 
 const building = {
     宿舍: [225,45,97,69],
@@ -29,6 +31,7 @@ function init(){
     map_bg.onload = () => {
         draw();
     }
+    update();
     init_dist();
     
     canvas.addEventListener('click', (e) => {
@@ -60,6 +63,13 @@ function init(){
         clear();
         draw();
     });
+    
+    clr.addEventListener('click', () => {
+        route = [];
+        update();
+        clear();
+        draw();
+    });
 }    
 
 function update(){
@@ -75,6 +85,26 @@ function update(){
     }
     let time = Math.round(dis/56.6);
     tt.innerHTML = time;
+    
+    // algo_inform
+    switch(algorithm){
+    case 'naive':
+        algo_inform.innerHTML = '全排列后找出最小, O((k-1)!)';
+        break;
+    case 'salesman':
+        algo_inform.innerHTML = '动态规划';
+        break;
+    case 'mst':
+        algo_inform.innerHTML = '近似算法, prim后前序';
+        break;
+    case 'none':
+        algo_inform.innerHTML = '无处理';
+        break;
+    default:
+        alert("illegal input algorithm");
+        break;
+    }
+    
 }
 
 function clear(){
@@ -133,7 +163,7 @@ function draw_route(){
     }
 }
 
-function algo_dist(x1, y1, x2, y2){
+function distance(x1, y1, x2, y2){
     let x = x2 - x1;
     let y = y2 - y1;
     return Math.sqrt(x * x + y * y);
@@ -144,7 +174,7 @@ function init_dist(){
     for (const [key, value] of Object.entries(building)){
         let tmp = {};
         for (const [k, v] of Object.entries(building)){
-            tmp[k] = algo_dist(value[0], value[1], v[0], v[1]);
+            tmp[k] = distance(value[0], value[1], v[0], v[1]);
         }
         dist[key] = tmp;
     }
