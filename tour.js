@@ -295,20 +295,65 @@ class Tree{
     
 }
     
+// init memo
+let memo = {};
+
 function algo_salesman(){
     let len = route.length;
+    memo = {};
     
-    // init memo
-    let memo = {};
-    // for (const k of route){
-    //     memo[k] = new Array(Math.pow(2, len)).fill(-1);
-    // }
-    //console.log(memo);
-    
+    // algo
     let ret = Math.pow(2, 20);
+    for (let i = 1; i < len; i++){
+        ret = Math.min(ret, salesman_cost(route, route[i]) + dist[route[0]][route[i]]);
+    }
+    
+    let tmp_route = ["宿舍"];
+    while(route.length > 2){
+        let ret = Math.pow(2, 20);
+        let last = "";
+        for (const [key, value] of Object.entries(memo[route])){
+            if (value + dist[key][tmp_route[0]] < ret){
+                ret = value + dist[key][tmp_route[0]] ;
+                last = key;
+            }
+        }
+        route.splice(route.findIndex(i => i === last), 1);
+        tmp_route.reverse();
+        tmp_route.push(last);
+        tmp_route.reverse();
+    }
+
+    if (tmp_route != ["宿舍"]){
+        tmp_route.splice(tmp_route.findIndex(i => i === "宿舍"), 1);        
+        route = route.concat(tmp_route);
+    }
 }
 
-function algo_salesman(tgt, rest){
+function salesman_cost(subset, end){
+    if (subset.length == 2){
+        return dist[subset[0]][end];
+    }
+
+    if (memo[subset] == undefined){
+        memo[subset] = {};
+    }
+        
+    if (memo[subset][end] != undefined){
+        return memo[subset][end];
+    }
+    // push to memo
+    let ret = Math.pow(2, 20);
+    for (const tmp of subset){
+        if (tmp == route[0]) continue;
+        if (tmp == end) continue;
+        let ssubset = subset.slice();
+        ssubset.splice(ssubset.findIndex(i => i === end), 1);
+        ret = Math.min(ret, salesman_cost(ssubset, tmp) + dist[end][tmp]);
+        memo[subset][end] = ret;
+    }
+
+    return ret;
 }
 
 function isBuilding(e){
