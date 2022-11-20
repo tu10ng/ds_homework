@@ -319,7 +319,7 @@ function algo_salesman(){
                     last = key;
                 }
             }
-            else if (value + dist[key][tmp_route[0]] < ret){
+            else if (value < ret){
                 ret = value + dist[key][tmp_route[0]];
                 last = key;
             }
