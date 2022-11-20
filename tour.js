@@ -73,18 +73,20 @@ function init(){
 }    
 
 function update(){
+    // time
     // 三教到宿舍到距离需要5分钟
     // 50pixel <-> 1 min
-    let dis = 0;
-    for (let i = 0; i < route.length; i++){
-        if (i != route.length-1){
-            dis += dist[route[i]][route[i+1]];
-        }else{
-            dis += dist[route[i]][route[0]];
-        }
-    }
-    let time = Math.round(dis/56.6);
-    tt.innerHTML = time;
+    // let dis = 0;
+    // for (let i = 0; i < route.length; i++){
+    //     if (i != route.length-1){
+    //         dis += dist[route[i]][route[i+1]];
+    //     }else{
+    //         dis += dist[route[i]][route[0]];
+    //     }
+    // }
+    
+    // let time = Math.round(dis/56.6);
+    // tt.innerHTML = time;
     
     // algo_inform
     switch(algorithm){
@@ -134,18 +136,31 @@ function draw_building(){
 }
 
 function draw_route(){
+    let dis = 0;
+    let time = 0;
     for (let i = 0; i < route.length; i++){
         // route[i] -> route[i+1]
         let first = building[route[i]];
         let second;
         if (i == route.length-1){
             second = building[route[0]]; // exceed route length, last build->first build
+            dis += dist[route[i]][route[0]];
         }else{
             second = building[route[i+1]];
+            dis += dist[route[i]][route[i+1]];            
         }
         let start = [first[0] + first[2]/2, first[1] + first[3]/2];
         let end = [second[0] + second[2]/2, second[1] + second[3]/2];
+
+        // time
+        time = Math.round(dis/56.6);
+        ctx.save();
+        ctx.font = '24px bold Times New Roman';
+        ctx.textAlign = 'center';
+        ctx.strokeText(time, end[0] + 20, end[1] - 30);    
+        ctx.restore();
         
+        // arrow
         let arrow_len = 30; // length of head in pixels
         var dx = end[0] - start[0];
         var dy = end[1] - start[1];
@@ -161,6 +176,7 @@ function draw_route(){
         ctx.stroke();
         ctx.restore();
     }
+    tt.innerHTML = time;
 }
 
 function distance(x1, y1, x2, y2){
@@ -313,14 +329,14 @@ function algo_salesman(){
         let ret = Math.pow(2, 20);
         let last = "";
         for (const [key, value] of Object.entries(memo[route])){
-            if (tmp_route == [route[0]]) {
+            if (tmp_route.length == 1) {
                 if (value + dist[key][tmp_route[0]] < ret){
                     ret = value + dist[key][tmp_route[0]];
                     last = key;
                 }
             }
             else if (value < ret){
-                ret = value + dist[key][tmp_route[0]];
+                ret = value;
                 last = key;
             }
         }
