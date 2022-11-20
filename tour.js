@@ -308,13 +308,19 @@ function algo_salesman(){
         ret = Math.min(ret, salesman_cost(route, route[i]) + dist[route[0]][route[i]]);
     }
     
-    let tmp_route = ["宿舍"];
+    let tmp_route = [route[0]];
     while(route.length > 2){
         let ret = Math.pow(2, 20);
         let last = "";
         for (const [key, value] of Object.entries(memo[route])){
-            if (value + dist[key][tmp_route[0]] < ret){
-                ret = value + dist[key][tmp_route[0]] ;
+            if (tmp_route == [route[0]]) {
+                if (value + dist[key][tmp_route[0]] < ret){
+                    ret = value + dist[key][tmp_route[0]];
+                    last = key;
+                }
+            }
+            else if (value + dist[key][tmp_route[0]] < ret){
+                ret = value + dist[key][tmp_route[0]];
                 last = key;
             }
         }
@@ -324,8 +330,8 @@ function algo_salesman(){
         tmp_route.reverse();
     }
 
-    if (tmp_route != ["宿舍"]){
-        tmp_route.splice(tmp_route.findIndex(i => i === "宿舍"), 1);        
+    if (tmp_route != [route[0]]){
+        tmp_route.splice(tmp_route.findIndex(i => i === route[0]), 1);        
         route = route.concat(tmp_route);
     }
 }
