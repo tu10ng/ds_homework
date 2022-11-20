@@ -329,14 +329,8 @@ function algo_salesman(){
         let ret = Math.pow(2, 20);
         let last = "";
         for (const [key, value] of Object.entries(memo[route])){
-            if (tmp_route.length == 1) {
-                if (value + dist[key][tmp_route[0]] < ret){
-                    ret = value + dist[key][tmp_route[0]];
-                    last = key;
-                }
-            }
-            else if (value < ret){
-                ret = value;
+            if (value + dist[key][tmp_route[0]] < ret){
+                ret = value + dist[key][tmp_route[0]];
                 last = key;
             }
         }
