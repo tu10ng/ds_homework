@@ -73,21 +73,6 @@ function init(){
 }    
 
 function update(){
-    // time
-    // 三教到宿舍到距离需要5分钟
-    // 50pixel <-> 1 min
-    // let dis = 0;
-    // for (let i = 0; i < route.length; i++){
-    //     if (i != route.length-1){
-    //         dis += dist[route[i]][route[i+1]];
-    //     }else{
-    //         dis += dist[route[i]][route[0]];
-    //     }
-    // }
-    
-    // let time = Math.round(dis/56.6);
-    // tt.innerHTML = time;
-    
     // algo_inform
     switch(algorithm){
     case 'naive':
@@ -323,7 +308,8 @@ function algo_salesman(){
     for (let i = 1; i < len; i++){
         ret = Math.min(ret, salesman_cost(route, route[i]) + dist[route[0]][route[i]]);
     }
-    
+
+    // reverse traverse
     let tmp_route = [route[0]];
     while(route.length > 2){
         let ret = Math.pow(2, 20);
@@ -372,6 +358,7 @@ function salesman_cost(subset, end){
     return ret;
 }
 
+// used for clicking event
 function isBuilding(e){
     let x = e.clientX;
     let y = e.clientY;
@@ -385,4 +372,5 @@ function isBuilding(e){
     return false;
 }
 
+// run
 init();
