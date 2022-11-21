@@ -1,13 +1,26 @@
 * desc
-a work on progress.
-
-this project is a class assignment for data structure.
+this project is a class assignment for bjut data structure assignment.
 
 calculate fastest route in bjut.
 
-* TODO program structure
-+an interface between algorithm and gui.+
+** usage
+its pure js and html. just open the `index.html' in your web browser.
 
-using canvas in html (index.html), js for handling dynamic computing.
+** function
++ basic
+  - [X] 10 places
+  - [X] algorithm
+  - [X] total time
++ advance 
+  - [X] real data
+  - [X] dynamic calculate
+  - [X] reaching time
+  - [X] phone version
+  - [X] user can specify which of 5 algo to use
+  - [X] provide accurate and predict algo
+
+
+* program structure
+Initial thought is to design an interface between algorithm and gui. Later found that using canvas in html & js for handling dynamic computing is faster in development.
 
 
