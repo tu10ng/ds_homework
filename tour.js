@@ -37,7 +37,6 @@ function init(){
     canvas.addEventListener('click', (e) => {
         let tmp_build = isBuilding(e);
         if(tmp_build != false){
-            //console.log(tmp_build);
             if (route.includes(tmp_build)){
                 route.splice(route.findIndex(i => i === tmp_build), 1)
             } else {
@@ -182,8 +181,6 @@ function init_dist(){
         }
         dist[key] = tmp;
     }
-
-    console.log(dist);
 }
 
 
@@ -301,7 +298,7 @@ class Tree{
     }
     
 }
-    
+
 // init memo
 let memo = {};
 
@@ -346,7 +343,7 @@ function salesman_cost(subset, end){
     if (memo[subset] == undefined){
         memo[subset] = {};
     }
-        
+    
     if (memo[subset][end] != undefined){
         return memo[subset][end];
     }
@@ -402,7 +399,6 @@ function isBuilding(e){
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
     for (const [key, value] of Object.entries(building)){
-        //console.log(key + ":" + value);
         if (x > value[0] && x < value[0] + value[2] &&
             y > value[1] && y < value[1] + value[3]){
             return key;
