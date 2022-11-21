@@ -84,6 +84,9 @@ function update(){
     case 'mst':
         algo_inform.innerHTML = '近似算法, prim后前序';
         break;
+    case 'greedy':
+        algo_inform.innerHTML = '贪心';
+        break;
     case 'none':
         algo_inform.innerHTML = '无处理';
         break;
@@ -197,6 +200,9 @@ function algo(){
         break;
     case 'mst':
         algo_mst();
+        break;
+    case 'greedy':
+        algo_greedy();
         break;
     case 'none':
         break;
@@ -356,6 +362,38 @@ function salesman_cost(subset, end){
     }
 
     return ret;
+}
+
+let greedy_pos = []
+function algo_greedy(){
+    greedy_pos[0] = route[0];
+    for (let i = 1; i < route.length; i++){
+        greedy_pos[i] = findCity(greedy_pos[i - 1]);
+    }
+    
+    for (const i of route){
+        route[i] = greedy_pos[i];
+    }
+}
+
+function findCity(city){
+    let ret = 100000;
+    let nextCity;
+
+    for (const i of route){
+        if (dist[city][i] < ret && checkAccess(i) == false){
+            ret = dist[city][i];
+            nextCity = i;
+        }
+    }
+    return nextCity;
+}
+
+function checkAccess(city){
+    for (const i of route){
+        if (greedy_pos[i] == city) return true;
+    }
+    return false;
 }
 
 // used for clicking event
