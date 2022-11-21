@@ -360,8 +360,9 @@ function salesman_cost(subset, end){
 
 // used for clicking event
 function isBuilding(e){
-    let x = e.clientX;
-    let y = e.clientY;
+    let rect = canvas.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
     for (const [key, value] of Object.entries(building)){
         //console.log(key + ":" + value);
         if (x > value[0] && x < value[0] + value[2] &&
