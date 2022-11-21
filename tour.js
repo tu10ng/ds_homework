@@ -207,7 +207,7 @@ function algo(){
     case 'none':
         break;
     default:
-        algo_naive();
+        algo_salesman();
         break;
     }
 }
