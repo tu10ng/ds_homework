@@ -15,6 +15,7 @@ its pure js and html. just open the `index.html' in your web browser.
   - [X] real data
   - [X] dynamic calculate
   - [X] reaching time
+  - [X] place deletion
   - [X] phone version
   - [X] user can specify which of 5 algo to use
   - [X] provide accurate and predict algo
