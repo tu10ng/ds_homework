@@ -332,7 +332,7 @@ function algo_salesman(){
         tmp_route.reverse();
     }
 
-    if (tmp_route != [route[0]]){
+    if (tmp_route.length > 1){
         tmp_route.splice(tmp_route.findIndex(i => i === route[0]), 1);        
         route = route.concat(tmp_route);
     }
